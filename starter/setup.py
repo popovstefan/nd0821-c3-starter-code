@@ -1,8 +1,8 @@
 import setuptools
 
 setuptools.setup(
-    name="starter",
-    version="0.0.0",
-    description="Starter code.",
-    author="Student",
+    name="ml-heroku-fastapi",
+    version="0.0.1",
+    description="Deployment of ML application on Heroku with FastAPI",
+    author="Stefan Popov",
 )
