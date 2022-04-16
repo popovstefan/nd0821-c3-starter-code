@@ -27,7 +27,8 @@ The data has been downloaded from this [link](https://archive.ics.uci.edu/ml/dat
 Model evaluation is performed using a random sample of size equal to 20% of this data (and not including any training data).
 
 ## Metrics
-_Please include the metrics used and your model's performance on those metrics._
+
+You can view these in `starter/model/slice_performances.txt`
 
 ## Ethical Considerations
 

@@ -5,12 +5,12 @@ import joblib
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-from .ml.data import process_data
-from .ml.model import train_model
+from ml.data import process_data
+from ml.model import train_model
 
 data_filepath = os.path.join(os.path.dirname(__file__), "../data/census_clean.csv")
 
-train, test = train_test_split(pd.read_csv(data_filepath), test_size=0.20)
+train, test = train_test_split(pd.read_csv(data_filepath), test_size=0.2)
 
 cat_features = [
     "workclass",
