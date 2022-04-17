@@ -31,7 +31,7 @@ async def get_items():
 
 
 @app.post("/inference")
-async def inference(person: Person) -> dict[str, float]:
+async def inference(person: Person):
     clf = joblib.load(os.path.join(os.path.dirname(__file__),
                                    "model/model.joblib"))
     encoder = joblib.load(os.path.join(os.path.dirname(__file__),
