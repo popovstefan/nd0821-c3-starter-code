@@ -10,9 +10,8 @@ import joblib
 import pandas as pd
 from fastapi import FastAPI
 from typing import Literal
-from .starter import train_model
-from .starter.ml.data import process_data
-from .starter.ml import model
+from starter.starter.ml.data import process_data
+from starter.starter.ml import model
 from pydantic.main import BaseModel
 
 if "DYNO" in os.environ and os.path.isdir(".dvc"):
@@ -150,11 +149,11 @@ async def get_items():
 @app.post("/inference")
 async def inference(person: Person):
     clf = joblib.load(os.path.join(os.path.dirname(__file__),
-                                   "model/model.joblib"))
+                                   "starter/model/model.joblib"))
     encoder = joblib.load(os.path.join(os.path.dirname(__file__),
-                                       "model/encoder.joblib"))
+                                       "starter/model/encoder.joblib"))
     lb = joblib.load(os.path.join(os.path.dirname(__file__),
-                                  "model/lb.joblib"))
+                                  "starter/model/lb.joblib"))
 
     test_x = pd.DataFrame(data=[[
         person.age,
@@ -181,7 +180,16 @@ async def inference(person: Person):
     ])
 
     X, _, _, _ = process_data(test_x,
-                              categorical_features=train_model.cat_features,
+                              categorical_features=[
+                                  "workclass",
+                                  "education",
+                                  "marital-status",
+                                  "occupation",
+                                  "relationship",
+                                  "race",
+                                  "sex",
+                                  "native-country",
+                              ],
                               encoder=encoder,
                               lb=lb,
                               training=False)

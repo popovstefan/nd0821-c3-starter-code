@@ -4,15 +4,17 @@ import joblib
 import pandas as pd
 import pytest as pytest
 
-from .ml.data import process_data
-from .ml.model import inference
-from .train_model import cat_features
+from starter.starter.ml.data import process_data
+from starter.starter.ml.model import inference
+from starter.starter.train_model import cat_features
 
 
 @pytest.fixture
 def df() -> pd.DataFrame:
-    fp = os.path.join(os.path.dirname(__file__),
-                      "../data/census_clean.csv")
+    fp = os.path.abspath(
+        os.path.join(os.path.dirname(__file__),
+                     "starter/data/census_clean.csv")
+    )
     return pd.read_csv(fp)
 
 
@@ -21,10 +23,10 @@ def test_process_data(df):
     Check that splits have the same number of rows for X and y
     """
     fp = os.path.join(os.path.dirname(__file__),
-                      "../model/encoder.joblib")
+                      "starter/model/encoder.joblib")
     encoder = joblib.load(fp)
     fp = os.path.join(os.path.dirname(__file__),
-                      "../model/lb.joblib")
+                      "starter/model/lb.joblib")
     lb = joblib.load(fp)
 
     X, y, _, _ = process_data(df,
@@ -42,11 +44,15 @@ def test_encoder_and_lb_params(df):
     Check encoder and label-binarizer parameters
     in training and inference setting.
     """
-    fp = os.path.join(os.path.dirname(__file__),
-                      "../model/encoder.joblib")
+    fp = os.path.abspath(
+        os.path.join(os.path.dirname(__file__),
+                     "starter/model/encoder.joblib")
+    )
     encoder_test = joblib.load(fp)
-    fp = os.path.join(os.path.dirname(__file__),
-                      "../model/lb.joblib")
+    fp = os.path.abspath(
+        os.path.join(os.path.dirname(__file__),
+                     "starter/model/lb.joblib")
+    )
     lb_test = joblib.load(fp)
 
     _, _, encoder, lb = process_data(df,
@@ -69,14 +75,20 @@ def test_inference_above():
     """
     Check inference performance (sample data taken from the eda.ipynb)
     """
-    fp = os.path.join(os.path.dirname(__file__),
-                      "../model/model.joblib")
+    fp = os.path.abspath(
+        os.path.join(os.path.dirname(__file__),
+                     "starter/model/model.joblib")
+    )
     model = joblib.load(fp)
-    fp = os.path.join(os.path.dirname(__file__),
-                      "../model/encoder.joblib")
+    fp = os.path.abspath(
+        os.path.join(os.path.dirname(__file__),
+                     "starter/model/encoder.joblib")
+    )
     encoder = joblib.load(fp)
-    fp = os.path.join(os.path.dirname(__file__),
-                      "../model/lb.joblib")
+    fp = os.path.abspath(
+        os.path.join(os.path.dirname(__file__),
+                     "starter/model/lb.joblib")
+    )
     lb = joblib.load(fp)
 
     test_df = pd.DataFrame(data=[[
@@ -116,14 +128,20 @@ def test_inference_below():
     """
     Check inference performance (sample data taken from the eda.ipynb)
     """
-    fp = os.path.join(os.path.dirname(__file__),
-                      "../model/model.joblib")
+    fp = os.path.abspath(
+        os.path.join(os.path.dirname(__file__),
+                     "starter/model/model.joblib")
+    )
     model = joblib.load(fp)
-    fp = os.path.join(os.path.dirname(__file__),
-                      "../model/encoder.joblib")
+    fp = os.path.abspath(
+        os.path.join(os.path.dirname(__file__),
+                     "starter/model/encoder.joblib")
+    )
     encoder = joblib.load(fp)
-    fp = os.path.join(os.path.dirname(__file__),
-                      "../model/lb.joblib")
+    fp = os.path.abspath(
+        os.path.join(os.path.dirname(__file__),
+                     "starter/model/lb.joblib")
+    )
     lb = joblib.load(fp)
 
     test_df = pd.DataFrame(data=[[
