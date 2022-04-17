@@ -35,7 +35,7 @@ def run_sanity_check(test_dir):
                test_function_names))
 
     print("\n============= Sanity Check Report ===========")
-    SANITY_TEST_PASSING = True
+    TEST_PASSING = True
     WARNING_COUNT = 1
 
     # GET()
@@ -49,7 +49,7 @@ def run_sanity_check(test_dir):
               "Please make sure you have a test case for the GET method.",
               "This MUST test both the status code,"
               " as well as the contents of the request object.\n")
-        SANITY_TEST_PASSING = False
+        TEST_PASSING = False
 
     else:
         for func in test_functions_for_get:
@@ -77,7 +77,7 @@ def run_sanity_check(test_dir):
     # POST()
     TEST_FOR_POST_METHOD_RESPONSE_CODE = False
     TEST_FOR_POST_METHOD_RESPONSE_BODY = False
-    COUNT_POST_METHOD_TEST_FOR_INFERENCE_RESULT = 0
+    COUNT_POST_METHOD_TEST_FOR_INFERENCE = 0
 
     if not test_functions_for_post:
         print(FAIL_COLOR + f"[{WARNING_COUNT}]")
@@ -89,7 +89,7 @@ def run_sanity_check(test_dir):
               "for the POST() method." +
               "\nOne test case for EACH of the "
               "possible inferences (results/outputs) of the ML model.\n")
-        SANITY_TEST_PASSING = False
+        TEST_PASSING = False
     else:
         if len(test_functions_for_post) == 1:
             print(f"[{WARNING_COUNT}]")
@@ -101,7 +101,7 @@ def run_sanity_check(test_dir):
                   "test cases for the POST() method." +
                   "\nOne test case for EACH of the possible inferences "
                   "(results/outputs) of the ML model.\n")
-            SANITY_TEST_PASSING = False
+            TEST_PASSING = False
 
         for func in test_functions_for_post:
             source = inspect.getsource(getattr(module, func))
@@ -110,7 +110,7 @@ def run_sanity_check(test_dir):
             if (source.find('.json') != -1) or \
                     (source.find('json.loads') != -1):
                 TEST_FOR_POST_METHOD_RESPONSE_BODY = True
-                COUNT_POST_METHOD_TEST_FOR_INFERENCE_RESULT += 1
+                COUNT_POST_METHOD_TEST_FOR_INFERENCE += 1
 
         if not TEST_FOR_POST_METHOD_RESPONSE_CODE:
             print(FAIL_COLOR + f"[{WARNING_COUNT}]")
@@ -126,7 +126,7 @@ def run_sanity_check(test_dir):
                   " seem to be testing the contents of the response")
 
         if len(test_functions_for_post) >= 2 and \
-                COUNT_POST_METHOD_TEST_FOR_INFERENCE_RESULT < 2:
+                COUNT_POST_METHOD_TEST_FOR_INFERENCE < 2:
             print(FAIL_COLOR + f"[{WARNING_COUNT}]")
             WARNING_COUNT += 1
             print(FAIL_COLOR +
@@ -134,14 +134,13 @@ def run_sanity_check(test_dir):
                   "one for each possible prediction"
                   " that your model can make.")
 
-    SANITY_TEST_PASSING = SANITY_TEST_PASSING and \
-                          TEST_FOR_GET_METHOD_RESPONSE_CODE and \
-                          TEST_FOR_GET_METHOD_RESPONSE_BODY and \
-                          TEST_FOR_POST_METHOD_RESPONSE_CODE and \
-                          TEST_FOR_POST_METHOD_RESPONSE_BODY and \
-                          COUNT_POST_METHOD_TEST_FOR_INFERENCE_RESULT >= 2
+    TEST_PASSING = TEST_PASSING and TEST_FOR_GET_METHOD_RESPONSE_CODE
+    TEST_PASSING = TEST_PASSING and TEST_FOR_GET_METHOD_RESPONSE_BODY
+    TEST_PASSING = TEST_PASSING and TEST_FOR_POST_METHOD_RESPONSE_CODE
+    TEST_PASSING = TEST_PASSING and TEST_FOR_POST_METHOD_RESPONSE_BODY
+    TEST_PASSING = TEST_PASSING and COUNT_POST_METHOD_TEST_FOR_INFERENCE >= 2
 
-    if SANITY_TEST_PASSING:
+    if TEST_PASSING:
         print(OK_COLOR + "Your test cases look good!")
 
 
