@@ -32,9 +32,12 @@ async def get_items():
 
 @app.post("/inference")
 async def inference(person: Person) -> dict[str, float]:
-    clf = joblib.load(os.path.join(os.path.dirname(__file__), "model/model.joblib"))
-    encoder = joblib.load(os.path.join(os.path.dirname(__file__), "model/encoder.joblib"))
-    lb = joblib.load(os.path.join(os.path.dirname(__file__), "model/lb.joblib"))
+    clf = joblib.load(os.path.join(os.path.dirname(__file__),
+                                   "model/model.joblib"))
+    encoder = joblib.load(os.path.join(os.path.dirname(__file__),
+                                       "model/encoder.joblib"))
+    lb = joblib.load(os.path.join(os.path.dirname(__file__),
+                                  "model/lb.joblib"))
 
     test_x = pd.DataFrame(data=[[
         person.age,

@@ -11,15 +11,21 @@ from .train_model import cat_features
 
 @pytest.fixture
 def df() -> pd.DataFrame:
-    return pd.read_csv(os.path.join(os.path.dirname(__file__), "../data/census_clean.csv"))
+    fp = os.path.join(os.path.dirname(__file__),
+                      "../data/census_clean.csv")
+    return pd.read_csv(fp)
 
 
 def test_process_data(df):
     """
     Check that splits have the same number of rows for X and y
     """
-    encoder = joblib.load(os.path.join(os.path.dirname(__file__), "../model/encoder.joblib"))
-    lb = joblib.load(os.path.join(os.path.dirname(__file__), "../model/lb.joblib"))
+    fp = os.path.join(os.path.dirname(__file__),
+                      "../model/encoder.joblib")
+    encoder = joblib.load(fp)
+    fp = os.path.join(os.path.dirname(__file__),
+                      "../model/lb.joblib")
+    lb = joblib.load(fp)
 
     X, y, _, _ = process_data(df,
                               categorical_features=cat_features,
@@ -33,10 +39,15 @@ def test_process_data(df):
 
 def test_encoder_and_lb_params(df):
     """
-    Check encoder and label-binarizer parameters in training and inference setting
+    Check encoder and label-binarizer parameters
+    in training and inference setting.
     """
-    encoder_test = joblib.load(os.path.join(os.path.dirname(__file__), "../model/encoder.joblib"))
-    lb_test = joblib.load(os.path.join(os.path.dirname(__file__), "../model/lb.joblib"))
+    fp = os.path.join(os.path.dirname(__file__),
+                      "../model/encoder.joblib")
+    encoder_test = joblib.load(fp)
+    fp = os.path.join(os.path.dirname(__file__),
+                      "../model/lb.joblib")
+    lb_test = joblib.load(fp)
 
     _, _, encoder, lb = process_data(df,
                                      categorical_features=cat_features,
@@ -58,9 +69,15 @@ def test_inference_above():
     """
     Check inference performance (sample data taken from the eda.ipynb)
     """
-    model = joblib.load(os.path.join(os.path.dirname(__file__), "../model/model.joblib"))
-    encoder = joblib.load(os.path.join(os.path.dirname(__file__), "../model/encoder.joblib"))
-    lb = joblib.load(os.path.join(os.path.dirname(__file__), "../model/lb.joblib"))
+    fp = os.path.join(os.path.dirname(__file__),
+                      "../model/model.joblib")
+    model = joblib.load(fp)
+    fp = os.path.join(os.path.dirname(__file__),
+                      "../model/encoder.joblib")
+    encoder = joblib.load(fp)
+    fp = os.path.join(os.path.dirname(__file__),
+                      "../model/lb.joblib")
+    lb = joblib.load(fp)
 
     test_df = pd.DataFrame(data=[[
         55,
@@ -99,9 +116,15 @@ def test_inference_below():
     """
     Check inference performance (sample data taken from the eda.ipynb)
     """
-    model = joblib.load(os.path.join(os.path.dirname(__file__), "../model/model.joblib"))
-    encoder = joblib.load(os.path.join(os.path.dirname(__file__), "../model/encoder.joblib"))
-    lb = joblib.load(os.path.join(os.path.dirname(__file__), "../model/lb.joblib"))
+    fp = os.path.join(os.path.dirname(__file__),
+                      "../model/model.joblib")
+    model = joblib.load(fp)
+    fp = os.path.join(os.path.dirname(__file__),
+                      "../model/encoder.joblib")
+    encoder = joblib.load(fp)
+    fp = os.path.join(os.path.dirname(__file__),
+                      "../model/lb.joblib")
+    lb = joblib.load(fp)
 
     test_df = pd.DataFrame(data=[[
         45,
