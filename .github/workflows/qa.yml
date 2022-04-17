@@ -1,5 +1,5 @@
 # Workflow that runs the 'pytest' and 'flake8' command on every push to master
-name: Pytest Workflow
+name: Workflow
 
 on:
   push:
