@@ -33,7 +33,7 @@ jobs:
         uses: iterative/setup-dvc@v1
 
       - name: Pull data from DVC
-        run: dvc pull
+        run: dvc pull -R
 
       - name: Run Flake8
         run: flake8
