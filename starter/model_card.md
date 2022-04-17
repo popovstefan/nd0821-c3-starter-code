@@ -28,7 +28,7 @@ Model evaluation is performed using a random sample of size equal to 20% of this
 
 ## Metrics
 
-You can view these in `starter/model/slice_performances.txt`
+You can view these in `starter/model/slice_output.txt`
 
 ## Ethical Considerations
 

@@ -45,6 +45,6 @@ for cat_ftr in train_model.cat_features:
         slice_values.append(line)
 
 fn = os.path.join(os.path.dirname(__file__),
-                  '../model/slice_performances.txt')
+                  '../model/slice_output.txt')
 with open(fn, 'w') as f:
     f.write("\n".join(slice_values))

@@ -18,7 +18,7 @@ data = {
     "hoursPerWeek": 40,
     "nativeCountry": "United-States"
 }
-response = requests.post('https://udacity-c3-app.herokuapp.com/', json=data)
+response = requests.post('https://udacity-c3-app.herokuapp.com/inference', json=data)
 print("Response Code", response.status_code)
 print("Response Body", response.json())
 assert response.status_code == 200
