@@ -146,8 +146,9 @@ async def get_items():
     return {"message": "Greetings Earthling!"}
 
 
-@app.post("/inference")
-async def inference(person: Person):
+@app.on_event("startup")
+async def startup_event():
+    global clf, encoder, lb
     clf = joblib.load(os.path.join(os.path.dirname(__file__),
                                    "starter/model/model.joblib"))
     encoder = joblib.load(os.path.join(os.path.dirname(__file__),
@@ -155,6 +156,9 @@ async def inference(person: Person):
     lb = joblib.load(os.path.join(os.path.dirname(__file__),
                                   "starter/model/lb.joblib"))
 
+
+@app.post("/inference")
+async def inference(person: Person):
     test_x = pd.DataFrame(data=[[
         person.age,
         person.workclass,
