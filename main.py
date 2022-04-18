@@ -22,6 +22,8 @@ if "DYNO" in os.environ and os.path.isdir(".dvc"):
 
 app = FastAPI()
 
+clf = encoder = lb = None
+
 
 class Person(BaseModel):
     class Config:

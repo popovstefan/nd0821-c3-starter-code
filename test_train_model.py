@@ -18,17 +18,33 @@ def df() -> pd.DataFrame:
     return pd.read_csv(fp)
 
 
-def test_process_data(df):
+@pytest.fixture
+def model():
+    fp = os.path.abspath(
+        os.path.join(os.path.dirname(__file__),
+                     "starter/model/model.joblib")
+    )
+    return joblib.load(fp)
+
+
+@pytest.fixture
+def encoder():
+    fp = os.path.join(os.path.dirname(__file__),
+                      "starter/model/encoder.joblib")
+    return joblib.load(fp)
+
+
+@pytest.fixture
+def lb():
+    fp = os.path.join(os.path.dirname(__file__),
+                      "starter/model/lb.joblib")
+    return joblib.load(fp)
+
+
+def test_process_data(df, encoder, lb):
     """
     Check that splits have the same number of rows for X and y
     """
-    fp = os.path.join(os.path.dirname(__file__),
-                      "starter/model/encoder.joblib")
-    encoder = joblib.load(fp)
-    fp = os.path.join(os.path.dirname(__file__),
-                      "starter/model/lb.joblib")
-    lb = joblib.load(fp)
-
     X, y, _, _ = process_data(df,
                               categorical_features=cat_features,
                               label="salary",
@@ -71,26 +87,10 @@ def test_encoder_and_lb_params(df):
     assert lb.get_params() == lb_test.get_params()
 
 
-def test_inference_above():
+def test_inference_above(model, encoder, lb):
     """
     Check inference performance (sample data taken from the eda.ipynb)
     """
-    fp = os.path.abspath(
-        os.path.join(os.path.dirname(__file__),
-                     "starter/model/model.joblib")
-    )
-    model = joblib.load(fp)
-    fp = os.path.abspath(
-        os.path.join(os.path.dirname(__file__),
-                     "starter/model/encoder.joblib")
-    )
-    encoder = joblib.load(fp)
-    fp = os.path.abspath(
-        os.path.join(os.path.dirname(__file__),
-                     "starter/model/lb.joblib")
-    )
-    lb = joblib.load(fp)
-
     test_df = pd.DataFrame(data=[[
         55,
         "Private",
@@ -124,26 +124,10 @@ def test_inference_above():
     assert y == ">50K"
 
 
-def test_inference_below():
+def test_inference_below(model, encoder, lb):
     """
     Check inference performance (sample data taken from the eda.ipynb)
     """
-    fp = os.path.abspath(
-        os.path.join(os.path.dirname(__file__),
-                     "starter/model/model.joblib")
-    )
-    model = joblib.load(fp)
-    fp = os.path.abspath(
-        os.path.join(os.path.dirname(__file__),
-                     "starter/model/encoder.joblib")
-    )
-    encoder = joblib.load(fp)
-    fp = os.path.abspath(
-        os.path.join(os.path.dirname(__file__),
-                     "starter/model/lb.joblib")
-    )
-    lb = joblib.load(fp)
-
     test_df = pd.DataFrame(data=[[
         45,
         "State-gov",
