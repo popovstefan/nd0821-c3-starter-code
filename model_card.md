@@ -28,7 +28,13 @@ Model evaluation is performed using a random sample of size equal to 20% of this
 
 ## Metrics
 
-You can view these in `starter/model/slice_output.txt`
+The model scored the following on the test data:
+
+- Precision: 0.7060782681099084 
+- Recall: 0.5326633165829145 
+- FBeta: 0.6072323666308629
+
+The file at `starter/model/slice_output.txt` contains more detailed performance measures, where we slice the test set into specific sub-sets.
 
 ## Ethical Considerations
 
